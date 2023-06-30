@@ -40,7 +40,7 @@ class ProductController {
     const newProduct = new Productos({
       name: name,
       cost: cost,
-      categories: JSON.parse(categories),
+      categories: categories,
       image: image,
     });
     newProduct.save(function (err) {

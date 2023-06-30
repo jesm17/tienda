@@ -18,9 +18,14 @@ const createAdminSchema = Joi.object({
   password: Joi.string().min(7).required(),
 });
 
+// funcion que valida el cuerpo del request
+// recibe el request.body
 function valideAdminSchema(body) {
+  // valida que los datos del request.body tengan los nombres del esquema
+  // y que cumplan con las requisitos
   const validate = createAdminSchema.validate(body);
   if (validate.error) {
+    // si existe errores retorna cuales son
     return validate;
   } else {
     return null;
@@ -43,7 +48,9 @@ class AdminController {
       const admin = await Admins.findOne({ email });
       if (!admin) {
         // si no existe se le notifica al cliente
-        res.status(404).send({ message: "El email no esta registrado" });
+        res
+          .status(401)
+          .send({ message: "El email no esta registrado", ok: false });
         next();
       } else {
         // valida la contraseña que la contraseña ingresada le pertenesca al usuario
@@ -56,9 +63,20 @@ class AdminController {
             next();
           } else {
             // crea el token para el usuario
-            const jtw = jwt.sign({ admin: admin }, "secret", {
-              expiresIn: "3h",
-            });
+            const jtw = jwt.sign(
+              {
+                firstName: admin.firstName,
+                lastName: admin.lastName,
+                email: admin.email,
+                number_phone: admin.number_phone,
+                _id: admin._id,
+                role: "admin",
+              },
+              "secret",
+              {
+                expiresIn: "3h",
+              }
+            );
             // envia el token
             res.status(200).send({ token: jtw });
           }

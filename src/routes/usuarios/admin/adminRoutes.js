@@ -5,7 +5,7 @@ const adminRoutes = express.Router();
 
 adminRoutes.post("/admin/sigin", adminController.sigIn);
 adminRoutes.get("/admin/getadmin/:id", checkAuth, adminController.getAdminById);
-adminRoutes.get("/admin/getadmins", checkAuth, adminController.getAdmins);
+adminRoutes.get("   ", checkAuth, adminController.getAdmins);
 adminRoutes.post("/admin/create", checkAuth, adminController.createAdmin);
 adminRoutes.put("/admin/update/:id", checkAuth, adminController.updateAdmin);
 adminRoutes.delete("/admin/delete/:id", checkAuth, adminController.deleteAdmin);

@@ -25,7 +25,9 @@ export const checkAuth = async (req, res, next) => {
             .send({ message: "No esta autorizado para acceder a esta ruta" });
         } else {
           // respuesta si el id del admin existe
-          res.status(200).send({ message: "OK", ok: true });
+          next();
+          //res.status(200).send({ message: "OK", ok: true });
+          
         }
       });
     } else {
